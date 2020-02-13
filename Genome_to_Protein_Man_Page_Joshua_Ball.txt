@@ -1,0 +1,42 @@
+Genome_to_Protein(1)                     User Manuals                    Genome_to_Protein(1)
+
+NAME
+	Genome_to_Protein
+SYNOPSIS
+	Genome_to_Protein [-i input file] [-o output file] [-s species name] [-f frame number] [-m minimum ORF length]
+DESCRIPTION
+	Genome_to_Protein takes in a genome sequence file provided by the user, as the input file, and converts it into protein sequences for all 6 open reading frames (ORFs). It reads in the file and removes any line that does not contain only nucluotides. It then reads through the file codon-by-codon for the 3 forward reading frames and translates the codons to their amino-acid codes using the genetic-code dictionary supplied, then  the program creates the reverse compliments and repeats this process. If the genome sequence contains any unexpected types e.g. 'N' and this is in an ORF then this sequence will not be added to the output. The user can define the species name printed in the output, which frames are printed in the output, and the minimum ORF length of the sequences in the output. The protein sequences are output to a new file, which the user is able to define the name and file type of.
+OPTIONS
+	-i    Input file. This is the genome file you wish to convert to protein sequences.
+	-o    Output file. This is the name of the file you wish your translated sequence to be stored into. Leave blank for the file to be named Proteins.fasta by default.
+	-s    Species name or abbreviation. This is the name you wish you output proteins to have e.g. by entering IC your output will appear as: >ICGenome|Frame:1|ORF:1|Length:204| followed by the sequence on a new line. Leave this blank and this will be names 'species' by default.
+	-f    Frame number. This is the number you can enter to retrieve certain frames if you do not wish to see all frame. Enter 1 for forward frame 1, 2 for forward frame 2, 3 for forward frame 3, -1 for reverse frame 1, -2 for reverse frame 2, -3 for reverse frame 3. Enter 0 or leave argument blank (for deafult) to return all frames.
+	-m    Minimum ORF Length. Choose a value for the minimum ORF length. The program will then return all the sequences of this length and longer. Leave blank to use the default length of 50+.
+
+EXAMPLE INPUT COMMAND LINE
+	Genome_to_Protein.py -i genome.fasta -o I_claudius_proteins.fasta -s IC -f 1 -m 100
+for default minimum ORF length of 50 user can simply enter 
+	Genome_to_Protein.py -i genome.fasta -o I_claudius_proteins.fasta -s IC -f 1
+for default of all frames user can enter
+	Genome_to_Protein.py -i genome.fasta -o I_claudius_proteins.fasta -s IC
+for default species name of 'species' user can enter
+	Genome_to_Protein.py -i genome.fasta -o I_claudius_proteins.fasta
+for default file name of "Proteins.fasta" and default ORF length
+	Genome_to_Protein.py -i genome.fasta 
+
+EXAMPLE FILE INPUT
+>I.claudius genome sequence 
+tatggcaattaaaattggtatcaatggttttggtcgtatcggccgtatcgtattccgtgc
+
+EXAMPLE FILE OUTPUT
+>ICGenome|Frame:1|ORF:1|Length:204|
+MQVSRRKFFKICAGGMAGT...
+>ICG|Frame:1|ORF:2|Length:809|
+MTNNWVDIKNANLIIVQGGN...
+
+BUGS
+	Currently only works for Prokayote genomes as it cannot deal with introns and exons in an Eukaryote genome.	
+AUTHOR
+	Written by Joshua M. Ball <joshuaball918@gmail.com>
+SEE ALSO
+	Stef Wenlock and Fern Johnson
